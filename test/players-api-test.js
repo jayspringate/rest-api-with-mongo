@@ -1,9 +1,6 @@
 'use strict';
 
 require('../server');
-process.env.MONGOLAB_URI = 'mongodb://localhost/players_test';
-
-var mongoose = require('mongoose');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
@@ -13,7 +10,11 @@ var Player = require('../models/Player');
 describe('fantasy baseball team players api', function () {
 	
 	after(function(done) {
-		mongoose.connection.db.dropDatabase(function() {
+		Player.destroy({
+			where: {
+				name: 'test'
+			}
+		}).then(function() {
 			done();
 		});
 	});
@@ -21,12 +22,12 @@ describe('fantasy baseball team players api', function () {
 	it('should be able to create a new player', function(done) {
 		chai.request('localhost:3000')
 			.post('/api/players')
-			.send({name: 'Test Player', ba: 0.326})
+			.send({name: 'test', ba: 0.326})
 			.end(function(err, res) {
 				expect(err).to.eql(null);
-				expect(res.body.name).to.eql('Test Player');
-				expect(res.body.ba).to.eql(0.326);
-				expect(res.body).to.have.property('_id');
+				expect(res.body.name).to.eql('test');
+				expect(res.body.ba).to.eql('0.326');
+				expect(res.body).to.have.property('id');
 				done();
 			});
 	});
@@ -44,37 +45,42 @@ describe('fantasy baseball team players api', function () {
 
 	describe('needs an existing player in the array', function() {
 		beforeEach(function(done) {
-			var testPlayer = new Player({name: 'Test Player', ba: 0.343});
-			testPlayer.save(function(err, data) {
-				if(err) throw err;
+			var testPlayer = {name: 'test', ba: 0.343};
+			Player.create(testPlayer)
+			.then(function(data) {
 				this.testPlayer = data;
+			}.bind(this))
+			.then(function(err) {
+				console.log(err);
+			})
+			.then(function() {
 				done();
-			}.bind(this));
-		});
+			});
+			});
 
 	it('should create test player in beforeEach block', function() {
-		expect(this.testPlayer.name).to.eql('Test Player');
-		expect(this.testPlayer.ba).to.eql(0.343);
-		expect(this.testPlayer).to.have.property('_id');
+		expect(this.testPlayer.name).to.eql('test');
+		expect(this.testPlayer.ba).to.eql('0.343');
+		expect(this.testPlayer).to.have.property('id');
 	});
 
 	it('should update a player', function(done) {
 		chai.request('localhost:3000')
-			.put('/api/players/' + this.testPlayer._id)
-			.send({name: 'New Player'})
+			.put('/api/players/' + this.testPlayer.id)
+			.send({name: 'test'})
 			.end(function(err, res) {
 				expect(err).to.eql(null);
-				expect(res.body.msg).to.eql('success');
+				expect(res.body.msg).to.eql('successful update');
 				done();
 			});
 	});
 
 	it('should delete a player', function(done) {
 		chai.request('localhost:3000')
-			.del('/api/players/' + this.testPlayer._id)
+			.del('/api/players/' + this.testPlayer.id)
 			.end(function(err, res) {
 				expect(err).to.eql(null);
-				expect(res.body.msg).to.eql('success');
+				expect(res.body.msg).to.eql('successful delete');
 				done();
 			});
 		});
