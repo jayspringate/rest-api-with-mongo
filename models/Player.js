@@ -1,18 +1,13 @@
 'use strict';
 
-var mongoose = require('mongoose');
-
-var playerSchema = mongoose.Schema({
-	name: {
-		type: String,
-		required: 'name is required!'
-	},
-	ba: {
-		type: Number,
-		required: 'batting average is required!',
-		min: 0,
-		max: 1
-	}
+var Sql = require('sequelize');
+var sql = new Sql('notes_dev', 'notes_dev', 'prince', {
+	dialect: 'postgres'
 });
 
-module.exports = mongoose.model('Player', playerSchema);
+var Player = module.exports = sql.define('Player', {
+	name: Sql.STRING,
+	ba: Sql.DECIMAL
+});
+
+Player.sync();
