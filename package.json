@@ -33,8 +33,13 @@
     "superagent-cli": "^1.5.5"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.3",
+    "eat": "^0.1.1",
     "express": "^4.12.3",
-    "mongoose": "^4.0.2"
+    "mongoose": "^4.0.2",
+    "node-uuid": "^1.4.3",
+    "passport": "^0.2.1",
+    "passport-http": "^0.2.2"
   }
 }
