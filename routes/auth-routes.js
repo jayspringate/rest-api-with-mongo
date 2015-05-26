@@ -3,6 +3,7 @@
 var User = require('../models/User');
 var bodyparser = require('body-parser');
 var eatAuth = require('../lib/eat-auth')(process.env.APP_SECRET);
+var uuid = require('uuid');
 
 module.exports = function(router, passport) {
 	router.use(bodyparser.json());
@@ -13,6 +14,7 @@ module.exports = function(router, passport) {
 		delete newUserData.password;                            //get deleted from req.body
 		var newUser = new User(newUserData);
 		newUser.basic.email = req.body.email;
+		newUser.uniqueHashId = uuid.v1();
 		newUser.generateHash(req.body.password, function() {
 			
 		});

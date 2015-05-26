@@ -11,7 +11,7 @@ var userSchema = mongoose.Schema({
 		required: 'userID is required!'
 	},
 	uniqueHashId: {
-		type: String,
+		type: String
 	},
 	basic: {							//email and password under basic object for added protection
 		email: {
@@ -44,7 +44,7 @@ userSchema.methods.checkPassword = function (password, callback) {
 };
  
 userSchema.methods.generateToken = function(secret, callback) { //generate a random hash instead
-	eat.encode({uniqueHashId: uuid.v4()}, secret, callback);                 //of an id (UUID library)
+	eat.encode({id: this.uniqueHashId}, secret, callback);                 //of an id (UUID library)
 };
 
 module.exports = mongoose.model('User', userSchema);
