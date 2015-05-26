@@ -20,7 +20,7 @@ module.exports = function(grunt) {
   },
     jshint: {
       dev: {
-        src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js']
+        src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js', 'lib/**/*.js']
       },
       options: {
         node: true,
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         }
       },
       scripts: {
-        files: ['*.js', 'models/**/*.js', 'test/**/*.js', 'routes/**/*.js'],
+        files: ['*.js', 'models/**/*.js', 'test/**/*.js', 'routes/**/*.js', 'lib/**/*.js'],
         tasks: ['test'],
         options: {
           event: ['added', 'deleted', 'changed']
