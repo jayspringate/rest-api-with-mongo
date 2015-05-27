@@ -69,7 +69,7 @@ module.exports = function(grunt) {
         entry: __dirname + '/test/client/test.js',
         output: {
           path: 'test/client/',
-          file: 'test_bundle.js'
+          file: 'bundle.js'
         }
       }
     },
@@ -92,8 +92,8 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build:dev', ['webpack:client', 'copy:html']);
-  grunt.registerTask('test', ['jshint', 'simplemocha']);
+  grunt.registerTask('build:dev', ['webpack:client', 'webpack:test', 'copy:html']);
+  grunt.registerTask('test', ['jshint', 'mocha']);
   grunt.registerTask('default', ['test']);
   grunt.registerTask('default', 'simplemocha');
 };
