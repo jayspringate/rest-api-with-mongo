@@ -11,6 +11,7 @@ var playersRoutes = express.Router();
 var usersRoutes = express.Router();
 
 app.use(passport.initialize());
+app.use(express.static(__dirname + '/build'));
 
 require('./lib/passport-strategy')(passport);
 
