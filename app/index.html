@@ -1,13 +1,15 @@
 <!DOCTYPE>
 <html>
 	<head>
-
 		<meta charset='UTF-8'>
 		<title>Client Side</title>
 	</head>
-	<body>
-		<h1>Hello World!</h1>
-		<ul id='playerList'></ul>
+	<body data-ng-app='playersApp'>
+		<main data-ng-controller='playersMainController'>
+			<h1>{{greet}}</h1>
+			<input type='text' data-ng-model='greet'>
+			<ul id='playerList'></ul>
+		</main>
 		<script type='text/javascript' src='bundle.js'></script>
 	</body>
 </html>
