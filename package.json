@@ -1,0 +1,53 @@
+{
+  "name": "rest-api-with-mongo",
+  "version": "0.1.0",
+  "description": "assignment",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/**/*test.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jayspringate/rest-api-with-mongo.git"
+  },
+  "author": "jay.springate@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jayspringate/rest-api-with-mongo/issues"
+  },
+  "homepage": "https://github.com/jayspringate/rest-api-with-mongo",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "chai-http": "^1.0.0",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-simple-mocha": "^0.4.0",
+    "grunt-webpack": "^1.0.8",
+    "mocha": "^2.2.4",
+    "node-libs-browser": "^0.5.2",
+    "superagent": "^1.2.0",
+    "superagent-cli": "^1.5.5",
+    "webpack": "^1.9.10",
+    "webpack-dev-server": "^1.9.0"
+  },
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.12.3",
+    "eat": "^0.1.1",
+    "express": "^4.12.3",
+    "mongoose": "^4.0.2",
+    "node-uuid": "^1.4.3",
+    "passport": "^0.2.1",
+    "passport-http": "^0.2.2",
+    "uuid": "^2.0.1"
+  }
+}
