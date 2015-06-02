@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta charset='UTF-8'>
+		<title>Client Side</title>
+	</head>
+	<body data-ng-app='playersApp'>
+		<main data-ng-controller='playersController' data-ng-init='getAllPlayers()'>
+			<h1>Players:</h1>
+			<div data-ng-if='errors.length'>
+				<h2>Errors:</h2>
+				<ul data-ng-repeat='error in errors'>
+					<li>{{error.msg}}</li>
+				</ul>
+				<button data-ng-click='clearErrors()'>Clear Errors</button>
+			</div>
+
+			<form id='form' name='newPlayerForm' data-ng-submit='fastCreate();slowCreate()'>
+				<input type='text' id='name' data-ng-model='newPlayer.name' placeholder='Name'>
+				<input type='text' id='ba' data-ng-model='newPlayer.ba' placeholder='BA'>
+				<button type='submit'>Create New Player</button>
+			</form>
+			<ul data-ng-repeat='player in players'>
+				<li>{{player.name}}, BA: {{player.ba}}
+					<button data-ng-click='deletePlayer(player)'>Delete Player</button>
+					<button data-ng-if='!player.editing' data-ng-click='player.editing=true;showCancel()'>Edit</button>
+					<form name='{{"editing" + player._id}}' data-ng-if='player.editing' data-ng-submit='updatePlayer(player)'>
+						<input type='text' id='editName' data-ng-focus='cacheEdit()' data-ng-model='player.name' placeholder='name'>
+						<input type='text' id='editBa' data-ng-model='player.ba' placeholder='BA'>
+						<button type='submit'>Save Changes</button>
+					</form>
+					<button data-ng-hide='hideCancelEdit' data-ng-click='cancelEdit(player);player.editing=false;'>Cancel</button>
+				</li>
+			</ul>
+			<ul>
+				<li data-ng-hide='hideFastLoad' id='fast'></li>
+			</ul>
+		</main>
+		<script type='text/javascript' src='bundle.js'></script>
+	</body>
+</html>
