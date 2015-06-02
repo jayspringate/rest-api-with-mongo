@@ -4,6 +4,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-webpack');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.initConfig({
     simplemocha: {
@@ -18,12 +21,14 @@ module.exports = function(grunt) {
       src: ['test/**/*.js'] 
     }
   },
+
     jshint: {
       dev: {
-        src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js']
+        src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js', 'lib/**/*.js']
       },
       options: {
         node: true,
+        ignores: ['build/', 'test/client/bundle.js'],
         globals: {
           describe: true,
           it: true,
@@ -34,6 +39,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     watch: {
       configFiles: {
         files: ['Gruntfile.js'],
@@ -43,15 +49,52 @@ module.exports = function(grunt) {
         }
       },
       scripts: {
-        files: ['*.js', 'models/**/*.js', 'test/**/*.js', 'routes/**/*.js'],
+        files: ['*.js', 'models/**/*.js', 'test/**/*.js', 'routes/**/*.js', 'lib/**/*.js', 
+          'app/**/*.js', 'app/**/*.html', 'test/client/test.html'],
         tasks: ['test'],
         options: {
           event: ['added', 'deleted', 'changed']
-        },
-      },
+        }
+      }
     },
+
+    webpack: {
+      client: {
+        entry: __dirname + '/app/js/client.js',
+        output: {
+          path: 'build/',
+          file: 'bundle.js'
+        }
+      },
+    
+      test: {
+        entry: __dirname + '/test/client/test.js',
+        output: {
+          path: 'test/client/',
+          file: 'bundle.js'
+        }
+      }
+    },
+
+    copy: {
+      html: {
+        cwd: 'app/',
+        expand: true,
+        flatten: false,
+        src: '**/*.html',
+        dest: 'build/',
+        filter: 'isFile'
+      }
+    },
+
+    clean: {
+      dev: {
+        src: 'build/'
+      }
+    }
   });
-  grunt.registerTask('test', ['jshint', 'simplemocha']);
+
+  grunt.registerTask('build:dev', ['webpack:client', 'webpack:test', 'copy:html']);
+  grunt.registerTask('test', ['jshint', 'build:dev', 'simplemocha']);
   grunt.registerTask('default', ['test']);
-  grunt.registerTask('default', 'simplemocha');
 };
