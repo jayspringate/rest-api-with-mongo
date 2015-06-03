@@ -1,3 +1,4 @@
 build/
 db/
 test/client/bundle.js
+test/karma-test/bundle.js
