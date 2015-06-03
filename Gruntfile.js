@@ -11,14 +11,14 @@ module.exports = function(grunt) {
   grunt.initConfig({
     simplemocha: {
       options: {
-      globals: ['should'],
+      globals: ['should', 'window'],
       timeout: 3000,
       ignoreLeaks: false,
       ui: 'bdd',
       reporter: 'tap'
     },
     all: { 
-      src: ['test/**/*.js'] 
+      src: ['test/players-api-test.js'] 
     }
   },
 
@@ -28,14 +28,16 @@ module.exports = function(grunt) {
       },
       options: {
         node: true,
-        ignores: ['build/', 'test/client/bundle.js'],
+        ignores: ['build/', 'test/client/bundle.js', 'test/karma-test/bundle.js'],
         globals: {
           describe: true,
           it: true,
           before: true,
           after: true,
           beforeEach: true,
-          afterEach: true
+          afterEach: true,
+          expect: true,
+          angular: true
         }
       }
     },
@@ -73,8 +75,18 @@ module.exports = function(grunt) {
           path: 'test/client/',
           file: 'bundle.js'
         }
+      },
+
+      karmaTest: {
+        entry: __dirname + '/test/karma-test/test-entry.js',
+        output: {
+          path: 'test/karma-test/',
+          file: 'bundle.js'
+        }
       }
     },
+
+     
 
     copy: {
       html: {
@@ -94,7 +106,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build:dev', ['webpack:client', 'webpack:test', 'copy:html']);
+  grunt.registerTask('build:dev', ['webpack:client', 'webpack:test', 'webpack:karmaTest', 'copy:html']);
   grunt.registerTask('test', ['jshint', 'build:dev', 'simplemocha']);
   grunt.registerTask('default', ['test']);
 };

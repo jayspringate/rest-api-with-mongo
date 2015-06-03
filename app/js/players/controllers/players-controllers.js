@@ -5,6 +5,7 @@ module.exports = function(app) {
 		$scope.errors = [];
 		$scope.players = [];
 		$scope.hideFastLoad = true;
+		$scope.hideEdit = false;
 		$scope.hideCancelEdit = true;
 		var copyName;
 		var copyBa;
@@ -27,7 +28,8 @@ module.exports = function(app) {
 				})
 				.error(function(data) {
 					console.log(data);
-					$scope.errors.push({msg: 'could not create new note'});
+					$scope.errors.push({msg: 'could not create new player'});
+					$scope.hideFastLoad = true;
 				});
 		};
 		$scope.slowCreate = function() {
@@ -43,37 +45,48 @@ module.exports = function(app) {
 		}
 		$scope.showCancel = function() {
 			$scope.hideCancelEdit = false;
+			$scope.hideEdit = true;
 		}
 		$scope.cacheEdit = function() {
 			copyName = document.getElementById('editName').value;
 			console.log(copyName);
 			copyBa = document.getElementById('editBa').value;
 		}
+		$scope.slowCacheEdit = function() {
+			window.setTimeout($scope.cacheEdit,100);
+		}
 		$scope.updatePlayer = function(player) {
 			player.editing = false;
-			$http.put('api/players/' + player._id, player)
+			$scope.hideCancelEdit = true;
+			$http.put('/api/players/' + player._id, player)
 				.error(function(data) {
+					$scope.cancelEdit(player);
 					console.log(data);
-					$scope.errors.push({msg: 'could not update note'});
+					$scope.errors.push({msg: 'could not update player'});
 				});
+			$scope.hideEdit = false;
 		}
 		$scope.cancelEdit = function(player) {
 			console.log(copyName);
 			player.name = copyName;
 			player.ba = copyBa;
 			$scope.hideCancelEdit = true;
+			$scope.hideEdit = false;
 		}
 		$scope.deletePlayer = function(player) {
 			$scope.players.splice($scope.players.indexOf(player), 1);
-			$http.delete('api/players/' + player._id)
+			$http.delete('/api/players/' + player._id)
 				.error(function(data) {
 					console.log(data);
+					$scope.players.push(player);
 					$scope.errors.push({msg: 'could not delete player'});
 				});
 		};
+		$scope.cachePlayers = function() {
+			playersCache = players;
+		}
 		$scope.clearErrors = function() {
 			$scope.errors = [];
-			$scope.getAllPlayers(); //cache deleted instead of getall
 		};
 	}]);
 };
