@@ -68,14 +68,12 @@ describe('players controllers', function() {
 		});
 
 		it('should be able to save a new player', function() {
-			$scope.newPlayer = {name: 'Joey Votto', ba: 0.343};
 			$httpBackend.expectPOST('/api/players')
-				.respond(200, $scope.newPlayer);
-			$scope.createNewPlayer();
+				.respond(200, {name: 'Joey Votto', ba: 0.343});
+			$scope.createNewPlayer({name: 'Joey Votto', ba: 0.343});
 			$httpBackend.flush();
 			expect($scope.players[0].name).toBe('Joey Votto');
 			expect($scope.players[0].ba).toBe(0.343);
-			expect($scope.newPlayer).toBe(null);
 		});
 
 		it('should be able to update a player', function() {

@@ -1,7 +1,10 @@
 'use strict';
 
 module.exports = function(app) {
-	app.controller('playersController', ['$scope', '$http', function($scope, $http) {
+	app.controller('playersController', ['$scope', '$http', 'RESTResource', function($scope, $http, resource) {
+		
+		var Player = resource('players');
+
 		$scope.errors = [];
 		$scope.players = [];
 		$scope.hideFastLoad = true;
@@ -9,16 +12,23 @@ module.exports = function(app) {
 		$scope.hideCancelEdit = true;
 		var copyName;
 		var copyBa;
+
 		$scope.getAllPlayers = function() {
-			$http.get('/api/players')
-				.success(function(data) {
-					$scope.players = data;
-				})
-				.error(function(data) {
-					console.log(data);
-					$scope.errors.push({msg: 'error retrieving players'});
-				});
-		};
+			Player.getAll(function(err, data) {
+				if (err) return $scope.errors.push({msg: 'error retrieving players'});
+				$scope.players = data;
+			});
+		}
+		// 	$http.get('/api/players')
+		// 		.success(function(data) {
+					
+		// 		})
+		// 		.error(function(data) {
+		// 			console.log(data);
+		// 			$scope.errors.push({msg: 'error retrieving players'});
+		// 		});
+		
+
 		$scope.createNewPlayer = function() {
 			$http.post('/api/players', $scope.newPlayer)
 				.success(function(data) {
