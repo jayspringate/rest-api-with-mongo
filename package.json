@@ -34,6 +34,8 @@
     "grunt-simple-mocha": "^0.4.0",
     "grunt-webpack": "^1.0.8",
     "jasmine-core": "^2.3.4",
+    "karma-chrome-launcher": "^0.1.12",
+    "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.2.0",
     "mocha": "^2.2.4",

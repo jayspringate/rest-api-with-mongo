@@ -5,6 +5,7 @@
 		<title>Client Side</title>
 	</head>
 	<body data-ng-app='playersApp'>
+		<section data-simple-directive></section>
 		<main data-ng-controller='playersController' data-ng-init='getAllPlayers()'>
 			<h1>Players:</h1>
 			<div data-ng-if='errors.length'>
@@ -15,11 +16,8 @@
 				<button data-ng-click='clearErrors()'>Clear Errors</button>
 			</div>
 
-			<form id='form' name='newPlayerForm' data-ng-submit='fastCreate();slowCreate()'>
-				<input type='text' id='name' data-ng-model='newPlayer.name' placeholder='Name'>
-				<input type='text' id='ba' data-ng-model='newPlayer.ba' placeholder='BA'>
-				<button type='submit'>Create New Player</button>
-			</form>
+			<div data-new-player-form-directive></div>
+
 			<ul data-ng-repeat='player in players'>
 				<li>{{player.name}}, BA: {{player.ba}}
 					<button data-ng-click='deletePlayer(player)'>Delete Player</button>
