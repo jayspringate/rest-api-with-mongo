@@ -1,0 +1,26 @@
+<section data-ng-controller='playersController' data-ng-init='getAllPlayers()'>
+	<h1>Players:</h1>
+	<div data-ng-if='errors.length'>
+		<h2>Errors:</h2>
+		<ul data-ng-repeat='error in errors'>
+			<li>{{error.msg}}</li>
+		</ul>
+		<button data-ng-click='clearErrors()'>Clear Errors</button>
+	</div>
+	<div data-new-player-form-directive></div>
+	<ul data-ng-repeat='player in players'>
+		<li>{{player.name}}, BA: {{player.ba}}
+			<button data-ng-click='deletePlayer(player)'>Delete Player</button>
+			<button data-ng-if='!player.editing' data-ng-hide='hideEdit' data-ng-click='player.editing=true;showCancel();slowCacheEdit()'>Edit</button>
+			<form name='{{"editing" + player._id}}' data-ng-if='player.editing' data-ng-submit='updatePlayer(player)'>
+				<input type='text' id='editName' data-ng-model='player.name' placeholder='name'>
+				<input type='text' id='editBa' data-ng-model='player.ba' placeholder='BA'>
+				<button type='submit'>Save Changes</button>
+			</form>
+		</li>
+		<button data-ng-hide='hideCancelEdit' data-ng-if='player.editing' data-ng-click='cancelEdit(player);player.editing=false;hideEdit=false'>Cancel Editing</button>
+	</ul>
+	<ul>
+		<li data-ng-hide='hideFastLoad' id='fast'></li>
+	</ul>
+</section>		

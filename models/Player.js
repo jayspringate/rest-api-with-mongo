@@ -3,8 +3,14 @@
 var mongoose = require('mongoose');
 
 var playerSchema = mongoose.Schema({
+	userId: {
+		type: String,
+		unique: true,
+		required: 'userId is required!'
+	},
 	name: {
 		type: String,
+		unique: true,
 		required: 'name is required!'
 	},
 	ba: {
