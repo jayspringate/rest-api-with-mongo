@@ -5,7 +5,6 @@ var mongoose = require('mongoose');
 var playerSchema = mongoose.Schema({
 	username: {
 		type: String,
-		unique: true,
 		required: 'userId is required!'
 	},
 	name: {

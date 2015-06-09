@@ -17,6 +17,7 @@ require('./auth/controllers/auth-controllers')(playersApp);
 
 //directives
 require('./players/directives/new-player-form-directive')(playersApp);
+require('./auth/directives/logout-directive')(playersApp);
 
 playersApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
@@ -31,11 +32,5 @@ playersApp.config(['$routeProvider', function($routeProvider) {
 		.when('/create-user', {
 			templateUrl: 'templates/views/create-user.html',
 			controller: 'authController'
-		})
-		.when('/', {
-			redirectTo: '/players'
-		})
-		.otherwise({
-			redirectTo: '/create-user'
 		});
 }]);
