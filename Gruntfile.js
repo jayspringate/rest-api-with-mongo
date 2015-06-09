@@ -24,6 +24,21 @@ module.exports = function(grunt) {
   },
 
     jshint: {
+       jasmine: {
+        src: ['test/karma-test/*test.js'],
+        options: {
+          globals: {
+            angular: true,
+            describe: true,
+            it: true,
+            before: true,
+            beforeEach: true,
+            after: true,
+            afterEach: true,
+            expect: true
+          }
+        } 
+      },
       dev: {
         src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js', 'lib/**/*.js',
         'app/js/**/*.js']

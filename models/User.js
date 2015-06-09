@@ -6,7 +6,7 @@ var eat = require('eat');
 var uuid = require('node-uuid');
 
 var userSchema = mongoose.Schema({
-	userId: {
+	username: {
 		type: String,
 		required: 'userID is required!'
 	},

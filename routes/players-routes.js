@@ -21,11 +21,11 @@ module.exports = function(router) {
 
 	router.post('/players', eatAuth, function(req, res) {
 		var userObject = JSON.parse(JSON.stringify(req.user));
-		if (userObject.userId !== 'bills217') {  //bills217 is only permissible admin
+		if (userObject.username !== 'bills217') {  //bills217 is only permissible admin
 				return res.status(401).json({msg: 'not authorized - must be admin'});
 			}
 		var newPlayer = new Player(req.body);
-		newPlayer.userId = userObject.userId;
+		newPlayer.username = userObject.username;
 		newPlayer.save(function(err, data) {
 			if(err) {
 				console.log(err);
@@ -38,7 +38,7 @@ module.exports = function(router) {
 
 	router.put('/players/:id', eatAuth, function(req, res) {
 		var userObject = JSON.parse(JSON.stringify(req.user)); 
-		if (userObject.userId !== 'bills217') {  //bills217 is only permissible admin
+		if (userObject.username !== 'bills217') {  //bills217 is only permissible admin
 				return res.status(401).json({msg: 'not authorized - must be admin'});
 			}
 
@@ -57,7 +57,7 @@ module.exports = function(router) {
 
 	router.delete('/players/:id', eatAuth, function(req, res) {
 		var userObject = JSON.parse(JSON.stringify(req.user)); 
-		if (userObject.userId !== 'bills217') {  //bills217 is only permissible admin
+		if (userObject.username !== 'bills217') {  //bills217 is only permissible admin
 				return res.status(401).json({msg: 'not authorized - must be admin'});
 			}
 

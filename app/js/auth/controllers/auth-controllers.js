@@ -10,7 +10,7 @@ module.exports = function(app) {
 					auth.create(user, function (err) {
 						if (err) {
 							console.log(err);
-							$scope.errors.push({msg: 'could not sign in'});
+							return $scope.errors.push({msg: 'could not sign in'});
 						}
 
 						$location.path('/players');

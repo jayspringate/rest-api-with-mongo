@@ -31,8 +31,8 @@ module.exports = function(app) {
 		
 
 		$scope.createNewPlayer = function() {
-			var newPlayer = $scope.newPlayer;
-			$scope.newPlayer = null;
+			// var newPlayer = $scope.newPlayer;
+			// $scope.newPlayer = null;
 			$http.post('/api/players', $scope.newPlayer)
 				.success(function(data) {
 					$scope.players.push(data);
