@@ -24,8 +24,24 @@ module.exports = function(grunt) {
   },
 
     jshint: {
+       jasmine: {
+        src: ['test/karma-test/*test.js'],
+        options: {
+          globals: {
+            angular: true,
+            describe: true,
+            it: true,
+            before: true,
+            beforeEach: true,
+            after: true,
+            afterEach: true,
+            expect: true
+          }
+        } 
+      },
       dev: {
-        src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js', 'lib/**/*.js']
+        src: ['*.js', 'test/**/*.js', 'models/**/*.js', 'routes/**/*.js', 'lib/**/*.js',
+        'app/js/**/*.js']
       },
       options: {
         node: true,
@@ -38,7 +54,9 @@ module.exports = function(grunt) {
           beforeEach: true,
           afterEach: true,
           expect: true,
-          angular: true
+          angular: true,
+          window: true,
+          document: true
         }
       }
     },
@@ -66,14 +84,6 @@ module.exports = function(grunt) {
         entry: __dirname + '/app/js/client.js',
         output: {
           path: 'build/',
-          file: 'bundle.js'
-        }
-      },
-    
-      test: {
-        entry: __dirname + '/test/client/test.js',
-        output: {
-          path: 'test/client/',
           file: 'bundle.js'
         }
       },
@@ -113,7 +123,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build', ['jshint', 'webpack:client', 'webpack:test', 'webpack:karmaTest', 'karma:test', 'copy:html']);
+  grunt.registerTask('build', ['jshint', 'webpack:client', 'webpack:karmaTest', 'karma:test', 'copy:html']);
   grunt.registerTask('test', ['jshint', 'build:dev', 'simplemocha']);
   grunt.registerTask('karmatest', ['webpack:karmaTest', 'karma:test']);
   grunt.registerTask('default', ['build']);
